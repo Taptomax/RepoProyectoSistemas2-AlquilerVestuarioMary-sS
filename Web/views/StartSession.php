@@ -25,9 +25,6 @@
         </form>
 
         <div class="register-link">
-            <a href="SignIn.php">¿No tienes cuenta? Regístrate</a>
-        </div>
-        <div class="register-link">
             <a href="RecuperarCuenta.php">¿Olvidaste tu contraseña?</a>
         </div>
     </div>
