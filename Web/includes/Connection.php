@@ -8,10 +8,14 @@ class Conector {
     }
     
     private function connect() {
-        $host = "127.0.0.1";
+        /*$host = "127.0.0.1";
         $user = "ratikozx_Azufranio";
         $pass = "Mr_Master123";
-        $bd = "ratikozx_uv_azus_db";
+        $bd = "ratikozx_uv_azus_db";*/
+        $host = "127.0.0.1";
+        $user = "root";
+        $pass = "";
+        $bd = "Mary_sS";
         
         $this->connection = mysqli_connect($host, $user, $pass);
         

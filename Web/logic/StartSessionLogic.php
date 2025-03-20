@@ -8,7 +8,13 @@ define('MAX_LOGIN_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 0.5 * 60);
 
 if (isset($_SESSION['idUser']) && isset($_SESSION['username'])) {
-    header("Location: GeoMapa.php");
+    $prefix = strtoupper(substr($_SESSION['idUser'], 0, 3));
+    if($prefix == 'EMP'){
+        header("Location: GeoMapa.php");
+    }
+    elseif($prefix == 'MGR'){
+        header("Location: GeoMapa.php");
+    }
     exit();
 }
 
@@ -63,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = "Por favor, complete todos los campos.";
         } else {
             $con = connection();
-            $stmt = $con->prepare("SELECT idUser, username, password FROM usuario WHERE username = ? OR correo = ?");
+            $stmt = $con->prepare("SELECT empleadoID, usuario, Keyword  FROM UsuarioEmp WHERE usuario = ? OR correo = ?");
             $stmt->bind_param("ss", $username, $username);
             $stmt->execute();
             $result = $stmt->get_result();
