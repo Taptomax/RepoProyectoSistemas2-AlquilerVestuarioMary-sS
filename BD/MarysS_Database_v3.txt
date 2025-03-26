@@ -126,6 +126,7 @@ CREATE TABLE Actividad (
     HoraInicio DATETIME not null,
     HoraSalida datetime null,
     Intentos int(2) not null DEFAULT 0,
+    Habilitado boolean not null default 1,
     FOREIGN KEY (EmpleadoID) REFERENCES Empleado(EmpleadoID)
 );
 
