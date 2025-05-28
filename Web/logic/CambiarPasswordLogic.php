@@ -2,10 +2,10 @@
 session_start();
 include("../includes/Connection.php");
 
-// Verificar si hay una sesión de recuperación temporal
 if (!isset($_SESSION['temp_recovery'])) {
-    header("Location: ../views/StartSession.php");
-    exit();
+    //header("Location: ../views/StartSession.php");
+    print_r($_SESSION);
+    //exit();
 }
 
 $error = '';
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $idUser = $_SESSION['temp_recovery']['idUser'];
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $con->prepare("UPDATE usuario SET password = ? WHERE idUser = ?");
+        $stmt = $con->prepare("UPDATE UsuarioEmp SET Keyword = ? WHERE EmpleadoID = ?");
         $stmt->bind_param("ss", $hashed_password, $idUser);
         
         if ($stmt->execute()) {

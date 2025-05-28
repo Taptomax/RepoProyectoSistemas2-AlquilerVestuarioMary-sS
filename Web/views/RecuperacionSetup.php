@@ -6,12 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Código de Recuperación</title>
-    <link rel="icon" type="image/png" href="../Resources/imgs/ASGILogo.png">
+    <link rel="icon" type="image/png" href="../Resources/imgs/MarysSLogoIcon.png">
     <link rel="stylesheet" href="../CSS/Formularios.css">
 </head>
 <body>
     <div class="users-form">
-        <img src="../Resources/imgs/ASGTLogo.png" alt="Company Logo">
+        <img src="../Resources/imgs/MarysSLogoT.png" alt="Company Logo">
         <h1>Código de Recuperación</h1>
         <div class="description">
             Por favor, ingresa un código numérico de 6 dígitos que usarás en caso de necesitar recuperar tu cuenta. 

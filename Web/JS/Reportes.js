@@ -20,13 +20,13 @@ const intervaloSelect = document.getElementById('intervalo');
             const intervalo = document.getElementById('intervalo').value;
             if (chipSelect === "") {
                 alert("Por favor, selecciona un chip o 'Todos los dispositivos'.");
-                return false; // Evita el envío del formulario
+                return false;
             }
             else if (intervalo = ""){
                 alert("Por favor, selecciona un intervalo de tiempo'.");
                 return false;
             }
-            return true; // Permite el envío del formulario
+            return true;
         }
 
         function formatearFecha(fecha) {
@@ -36,12 +36,10 @@ const intervaloSelect = document.getElementById('intervalo');
             return `${anio}-${mes}-${dia}`;
         }
 
-        // Obtener la fecha de hoy y la fecha de hace 2 meses
         const hoy = new Date();
         const haceDosMeses = new Date();
         haceDosMeses.setMonth(haceDosMeses.getMonth() - 2);
 
-        // Establecer las fechas mínimas y máximas en los inputs
         fechaInicioInput.max = formatearFecha(hoy);
         fechaInicioInput.min = formatearFecha(haceDosMeses);
         fechaFinInput.max = formatearFecha(hoy);

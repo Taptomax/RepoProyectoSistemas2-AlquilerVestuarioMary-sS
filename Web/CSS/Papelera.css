@@ -1,0 +1,155 @@
+:root {
+    --mary-pink: #FF3E96;
+    --mary-teal: #40E0D0;
+    --mary-yellow: #FFD700;
+    --light-gray: #f3f3f3;
+    --dark-gray: #333333;
+  }
+  
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--light-gray);
+    margin: 0;
+    padding: 0;
+  }
+  
+  .page-title {
+    background-color: var(--mary-pink);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 4px solid var(--mary-teal);
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  
+  .tab-btn {
+    background-color: white;
+    color: var(--dark-gray);
+    border: 2px solid var(--mary-teal);
+    padding: 10px 20px;
+    margin: 0 5px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .tab-btn:hover {
+    background-color: var(--mary-yellow);
+    color: var(--dark-gray);
+  }
+  
+  .tab-btn.active {
+    background-color: var(--mary-teal);
+    color: white;
+  }
+  
+  .card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1200px;
+    overflow: hidden;
+  }
+  
+  .employee-table {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  thead {
+    background-color: var(--mary-pink);
+    color: white;
+  }
+  
+  th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    font-weight: 700;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  .action-btn {
+    width: 34px;
+    height: 34px;
+    background-color: var(--mary-teal);
+    color: white;
+    border: none;
+    display: flex;
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .action-btn::before{
+    content: "↻";
+  }
+
+  .action-btn:hover {
+    background-color: var(--mary-yellow);
+    color: var(--dark-gray);
+  }
+  
+  .employee-actions {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .delete-employee-btn {
+    background-color: var(--mary-teal);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .delete-employee-btn:hover {
+    background-color: var(--mary-yellow);
+    color: var(--dark-gray);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .tabs {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .tab-btn {
+      margin: 5px 0;
+      width: 80%;
+    }
+    
+    .card {
+      width: 95%;
+    }
+  }
