@@ -6,12 +6,8 @@ class Conector {
     private function __construct() {
         $this->connect();
     }
-    
+
     private function connect() {
-        /*$host = "127.0.0.1";
-        $user = "ratikozx_Azufranio";
-        $pass = "Mr_Master123";
-        $bd = "ratikozx_uv_azus_db";*/
         $host = "127.0.0.1";
         $user = "root";
         $pass = "";
@@ -43,3 +39,4 @@ function connection() {
     return Conector::instancia();
 }
 ?>
+

@@ -139,7 +139,6 @@
                 $p1->SetSize(0.4);
                 $p1->SetCenter(0.45);
 
-                // Leyenda personalizada
                 $leyendas = ["Afuera"];
                 foreach (array_keys($tiemposGeocercas) as $geocerca) {
                     $leyendas[] = $geocerca;

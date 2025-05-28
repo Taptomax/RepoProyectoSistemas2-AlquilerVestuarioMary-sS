@@ -1,23 +1,41 @@
-// Seleccionar elementos del DOM
-const menuToggle = document.getElementById('menuToggle');
-const navMenu = document.getElementById('navMenu');
-
-// Agregar evento para alternar el menú en dispositivos móviles
-menuToggle.addEventListener('click', function () {
-    navMenu.classList.toggle('active'); // Agrega o quita la clase 'active' al menú
-});
-
-// Cerrar el menú al hacer clic en un enlace (opcional para mejor experiencia en móvil)
-const menuLinks = navMenu.querySelectorAll('a');
-menuLinks.forEach(link => {
-    link.addEventListener('click', function () {
-        navMenu.classList.remove('active'); // Cierra el menú
-    });
-});
-
-// Asegurarse de que el menú esté cerrado al redimensionar la ventana
-window.addEventListener('resize', function () {
-    if (window.innerWidth > 768) {
-        navMenu.classList.remove('active'); // Oculta el menú en pantallas grandes
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const animateElements = () => {
+        const heroTitle = document.querySelector('.hero-title');
+        const heroText = document.querySelector('.hero-text');
+        const heroBtn = document.querySelector('.hero .btn');
+        
+        if(heroTitle) heroTitle.style.animation = 'fadeInUp 1s forwards';
+        if(heroText) setTimeout(() => heroText.style.animation = 'fadeInUp 1s forwards', 300);
+        if(heroBtn) setTimeout(() => heroBtn.style.animation = 'fadeInUp 1s forwards', 600);
+    };
+    
+    const createObserver = (elements, threshold = 0.1, delay = 200) => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * delay);
+                }
+            });
+        }, { threshold });
+        
+        elements.forEach(el => observer.observe(el));
+    };
+    
+    const featureBoxes = document.querySelectorAll('.feature-box');
+    const ctaElements = document.querySelectorAll('.cta-title, .cta-text, .cta-section .btn');
+    
+    if(featureBoxes.length) createObserver(featureBoxes);
+    if(ctaElements.length) createObserver(ctaElements, 0.1, 300);
+    
+    const heroSection = document.querySelector('.hero');
+    if(heroSection) {
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            heroSection.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+        });
     }
 });

@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Por favor, complete todos los campos.";
     } else {
         $con = connection();
-        $stmt = $con->prepare("SELECT idUser, username FROM usuario WHERE correo = ? AND CRecuperacion = ?");
+        $stmt = $con->prepare("SELECT EmpleadoID, usuario FROM UsuarioEmp WHERE correo = ? AND CodRecuperacion = ?");
         $stmt->bind_param("ss", $correo, $codigo);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -20,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
             $_SESSION['temp_recovery'] = [
-                'idUser' => $user['idUser'],
-                'username' => $user['username']
+                'idUser' => $user['EmpleadoID'],
+                'username' => $user['usuario']
             ];
             $stmt->close();
             $con->close();
