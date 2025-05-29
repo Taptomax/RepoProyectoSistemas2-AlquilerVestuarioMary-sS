@@ -7,7 +7,7 @@ const form = document.getElementById('passwordChangeForm');
             uppercase: /[A-Z]/,
             lowercase: /[a-z]/,
             number: /[0-9]/,
-            special: /[!@#$%^&*]/
+            special: /[!@#$%^&*]/  
         };
 
         function validatePassword() {
