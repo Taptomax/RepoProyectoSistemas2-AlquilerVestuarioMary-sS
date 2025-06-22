@@ -1,3 +1,4 @@
+/* Variables CSS */
 :root {
     --primary: #ff6b8a;
     --secondary: #8a4fff;
@@ -11,6 +12,7 @@
     --header-height: 60px;
 }
 
+/* Reset y estilos base */
 * {
     margin: 0;
     padding: 0;
@@ -23,11 +25,13 @@ body {
     color: #333;
 }
 
+/* Layout principal */
 .container {
     display: flex;
     min-height: 100vh;
 }
 
+/* Sidebar */
 .sidebar {
     width: var(--sidebar-width);
     background: linear-gradient(to bottom, var(--success), var(--success));
@@ -57,7 +61,7 @@ body {
 .MarysSLogo {
     width: auto;
     height: auto;
-    max-height:70px;
+    max-height: 70px;
     margin-right: 10px;
 }
 
@@ -102,6 +106,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Contenido principal */
 .main-content {
     flex: 1;
     margin-left: var(--sidebar-width);
@@ -118,6 +123,12 @@ body {
     padding: 0 20px;
 }
 
+.toggle-sidebar {
+    display: none;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
 .user-profile {
     display: flex;
     align-items: center;
@@ -130,10 +141,12 @@ body {
     margin-left: 15px;
 }
 
+/* Dashboard */
 .dashboard {
     padding: 20px;
 }
 
+/* Tarjetas de estadísticas */
 .stats-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -180,6 +193,7 @@ body {
     font-weight: bold;
 }
 
+/* Contenedor de gráficas */
 .charts-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -210,20 +224,91 @@ body {
     cursor: pointer;
 }
 
+/* Estilos para gráfica de barras - CORREGIDOS */
 .chart-content {
-    height: 250px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 10px;
+    overflow: hidden;
 }
 
+.bar-chart {
+    width: 100%;
+    height: 220px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 20px 10px 30px 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.bar {
+    background: linear-gradient(to top, var(--primary), var(--info));
+    width: 35px;
+    max-width: 40px;
+    min-height: 20px;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: all 0.3s ease;
+    margin: 0 2px;
+}
+
+.bar:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+.bar-label {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75em;
+    color: #666;
+    white-space: nowrap;
+    max-width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+/* Mensaje para cuando no hay datos */
+.no-data-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #666;
+    text-align: center;
+}
+
+.no-data-message i {
+    font-size: 2em;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+/* Contenedor de calendario y eventos */
 .calendar-events-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 20px;
 }
 
+/* Lista de productos */
+.product-list {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .costume-card {
+    border-bottom: 1px solid #eee;
+    padding: 12px 0;
     display: flex;
     background-color: white;
     border-radius: 10px;
@@ -232,6 +317,10 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     cursor: pointer;
     transition: all 0.3s;
+}
+
+.costume-card:last-child {
+    border-bottom: none;
 }
 
 .costume-card:hover {
@@ -262,12 +351,38 @@ body {
     margin-bottom: 5px;
 }
 
+/* Información de stock */
+.stock-info {
+    display: flex;
+    gap: 10px;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.stock-available {
+    color: #28a745;
+}
+
+.stock-rented {
+    color: #ffc107;
+}
+
+.stock-total {
+    color: #6c757d;
+}
+
+/* Estados y badges */
 .status {
     display: inline-block;
     padding: 3px 8px;
     border-radius: 10px;
     font-size: 12px;
     color: white;
+}
+
+.status.popular {
+    background-color: #ffd700;
+    color: #333;
 }
 
 .status.rented {
@@ -282,6 +397,50 @@ body {
     background-color: var(--warning);
 }
 
+/* Colores y categorías */
+.color-display {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.color-badge {
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.category-badge {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+/* Scrollbar personalizado */
+.scrollbar-custom::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Contenedor de mapa */
 .map-container {
     height: 300px;
     background-color: #eee;
@@ -292,8 +451,12 @@ body {
     color: #888;
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
+    .toggle-sidebar {
+        display: block;
+    }
+    
     .sidebar {
         width: 70px;
         overflow: hidden;
@@ -350,17 +513,5 @@ body {
     
     .user-profile {
         margin-top: 10px;
-    }
-}
-
-.toggle-sidebar {
-    display: none;
-    cursor: pointer;
-    margin-right: 15px;
-}
-
-@media (max-width: 768px) {
-    .toggle-sidebar {
-        display: block;
     }
 }

@@ -1,3 +1,8 @@
+<?php
+include('../includes/VerifySession.php');
+include('../includes/MGREMPPerms.php');
+include('../logic/ManagerDBLogic.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,12 +26,11 @@
             <div class="sidebar-nav">
                 <div class="nav-item active" id="menu-dashboard">
                     <i class="fas fa-home"></i>
-                    <span>Home</span>
+                    <span>Inicio</span>
                 </div>
-                <div class="nav-item" id="menu-reportes">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Reportes</span>
-                </div>
+
+                <hr>
+
                 <div class="nav-item" id="menu-rentactiva">
                     <i class="fas fa-hourglass-half"></i>
                     <span>Rentas Activas</span>
@@ -35,29 +39,42 @@
                     <i class="fas fa-clock"></i>
                     <span>Rentas Atrasadas</span>
                 </div>
-                <div class="nav-item" id="menu-registrorentas">
-                    <i class="bi bi-journal-bookmark-fill"></i>
-                    <span>Registro de Rentas</span>
+
+                <hr>
+
+                <div class="nav-item" id="menu-renta">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Registrar Renta</span>
                 </div>
                 <div class="nav-item" id="menu-lote">
                     <i class="fas fa-box"></i>
                     <span>Registrar Lote</span>
                 </div>
-                <div class="nav-item" id="menu-renta">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <span>Registrar Renta</span>
+
+                <hr>
+
+                <div class="nav-item" id="menu-productos">
+                    <i class="fas fa-tshirt"></i>
+                    <span>Gestionar Productos</span>
                 </div>
                 <div class="nav-item" id="menu-empleados">
                     <i class="fas fa-users-cog"></i>
                     <span>Gestionar Empleados</span>
                 </div>
-                <div class="nav-item" id="menu-productos">
-                    <i class="fas fa-tshirt"></i>
-                    <span>Gestionar Productos</span>
-                </div>
                 <div class="nav-item" id="menu-proveedores">
                     <i class="bi bi-truck-front-fill"></i>
                     <span>Gestionar Proveedores</span>
+                </div>
+
+                <hr>
+
+                <div class="nav-item" id="menu-registrorentas">
+                    <i class="bi bi-journal-bookmark-fill"></i>
+                    <span>Historial de Rentas</span>
+                </div>
+                <div class="nav-item" id="menu-reportes">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reportes</span>
                 </div>
             </div>
             <div class="sidebar-footer">
@@ -76,11 +93,7 @@
                 <div class="search-bar">
                 </div>
                 <div class="user-profile">
-                <?php include('../includes/MGREMP.php');?>
-                <?php include('../includes/MGREMPPerms.php'); ?>
-                <?php include('../logic/ManagerDBLogic.php'); ?>
-                    <!-- <span>Administrador</span>
-                        <img src="/api/placeholder/40/40" alt="Usuario"> -->
+                    <?php include('../includes/MGREMP.php'); ?>
                 </div>
             </div>
             
@@ -88,59 +101,57 @@
                 <div class="stats-container">
                     <div class="stat-card primary">
                         <h3>Ingresos Mensuales</h3>
-                        <div class="value"><?php echo $gananciasMensuales ?></div>
+                        <div class="value">Bs. <?php echo number_format($gananciasMensuales, 2) ?></div>
                     </div>
                     <div class="stat-card warning">
                         <h3>Disfraces Rentados</h3>
-                        <div class="value"><?php echo $prendasMensuales ?></div>
+                        <div class="value"><?php echo number_format($prendasMensuales) ?></div>
                     </div>
                     <div class="stat-card success">
                         <h3>Rentas Activas</h3>
                         <div class="value"><?php echo $rentasActivas ?></div>
                     </div>
                     <div class="stat-card info">
-                        <h3>Rentas Atrsadas</h3>
+                        <h3>Rentas Atrasadas</h3>
                         <div class="value"><?php echo $rentasAtrasadas ?></div>
                     </div>
                 </div>
                 
                 <div class="charts-container">
                     <div class="chart-card">
-                        <h3>
-                            Tendencia de Alquileres
-                            <span>Este año</span>
-                        </h3>
-                        <div class="chart-content">
-                            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-                                <div style="display: flex; justify-content: space-between; height: 80%;">
-                                    <div style="display: flex; flex-direction: column; justify-content: space-between;">
-                                        <span>100</span>
-                                        <span>80</span>
-                                        <span>60</span>
-                                        <span>40</span>
-                                        <span>20</span>
-                                        <span>0</span>
-                                    </div>
-                                    <div style="flex-grow: 1; display: flex; align-items: flex-end; padding-left: 20px;">
-                                        <div style="background-color: var(--primary); width: 30px; height: 60%; margin-right: 10px;"></div>
-                                        <div style="background-color: var(--info); width: 30px; height: 75%; margin-right: 10px;"></div>
-                                        <div style="background-color: var(--primary); width: 30px; height: 45%; margin-right: 10px;"></div>
-                                        <div style="background-color: var(--info); width: 30px; height: 90%; margin-right: 10px;"></div>
-                                        <div style="background-color: var(--primary); width: 30px; height: 65%; margin-right: 10px;"></div>
-                                        <div style="background-color: var(--info); width: 30px; height: 80%; margin-right: 10px;"></div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; justify-content: space-around; margin-top: 10px;">
-                                    <span>Ene</span>
-                                    <span>Feb</span>
-                                    <span>Mar</span>
-                                    <span>Abr</span>
-                                    <span>May</span>
-                                    <span>Jun</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <h3>
+        Tendencia de Alquileres
+        <span>Últimos 7 meses</span>
+    </h3>
+    <div class="chart-content">
+        <?php if(!empty($tendencias)): ?>
+            <div class="bar-chart">
+                <?php 
+                $maxRentas = 0;
+                foreach($tendencias as $mes) {
+                    if($mes['TotalRentas'] > $maxRentas) $maxRentas = $mes['TotalRentas'];
+                }
+                if($maxRentas == 0) $maxRentas = 1; // Evitar división por cero
+                
+                foreach($tendencias as $mes): 
+                    // Altura máxima de 160px para que quepan las etiquetas
+                    $altura = max(20, ($mes['TotalRentas'] / $maxRentas) * 160);
+                    // Truncar nombre del mes a 3 caracteres
+                    $mesCorto = substr($mes['MesNombre'], 0, 3);
+                ?>
+                <div class="bar" style="height: <?php echo $altura; ?>px;" title="<?php echo $mes['MesNombre'] . ': ' . $mes['TotalRentas']; ?> rentas">
+                    <div class="bar-label"><?php echo $mesCorto; ?></div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <?php else: ?>
+                <div class="no-data-message">
+                    <i class="fas fa-chart-bar"></i>
+                    <div>No hay datos de tendencias disponibles</div>
+                </div>
+            <?php endif; ?>
+            </div>
+        </div>
                     
                     <div class="chart-card">
                         <h3>
@@ -148,11 +159,53 @@
                             <span>Último mes</span>
                         </h3>
                         <div class="chart-content">
-                            <div style="width: 200px; height: 200px; border-radius: 50%; background: conic-gradient(var(--primary) 0% 25%, var(--info) 25% 55%, var(--success) 55% 75%, var(--warning) 75% 100%); position: relative;">
-                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; border-radius: 50%; background-color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                                    Total: 453
+                            <?php if(!empty($categoriaStats)): ?>
+                                <?php
+                                $totalCategorias = array_sum(array_column($categoriaStats, 'TotalRentado'));
+                                $colores = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6'];
+                                $porcentajes = [];
+                                $anguloAcumulado = 0;
+                                
+                                foreach($categoriaStats as $index => $categoria) {
+                                    $porcentaje = $totalCategorias > 0 ? ($categoria['TotalRentado'] / $totalCategorias) * 100 : 0;
+                                    $porcentajes[] = [
+                                        'categoria' => $categoria['Categoria'],
+                                        'porcentaje' => $porcentaje,
+                                        'color' => $colores[$index % count($colores)]
+                                    ];
+                                }
+                                ?>
+                                <div style="display: flex; align-items: center; gap: 30px;">
+                                    <div style="width: 200px; height: 200px; border-radius: 50%; background: conic-gradient(
+                                        <?php 
+                                        $gradientParts = [];
+                                        $currentAngle = 0;
+                                        foreach($porcentajes as $p) {
+                                            $endAngle = $currentAngle + $p['porcentaje'];
+                                            $gradientParts[] = $p['color'] . ' ' . $currentAngle . '% ' . $endAngle . '%';
+                                            $currentAngle = $endAngle;
+                                        }
+                                        echo implode(', ', $gradientParts);
+                                        ?>
+                                    ); position: relative;">
+                                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; border-radius: 50%; background-color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9em;">
+                                            <?php echo $totalCategorias; ?>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <?php foreach($porcentajes as $p): ?>
+                                        <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                                            <div style="width: 16px; height: 16px; background-color: <?php echo $p['color']; ?>; border-radius: 3px; margin-right: 8px;"></div>
+                                            <span style="font-size: 0.9em;"><?php echo $p['categoria']; ?>: <?php echo number_format($p['porcentaje'], 1); ?>%</span>
+                                        </div>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php else: ?>
+                                <div style="text-align: center; color: #666;">
+                                    No hay datos de categorías disponibles
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -160,77 +213,93 @@
                 <div class="calendar-events-container">
                     <div class="chart-card">
                         <h3>
-                            Disfraces Más Populares
-                            <span>Ver todos</span>
+                            Prendas Más Populares
+                            <span>Últimos 2 meses</span>
                         </h3>
-                        <div class="costume-card">
-                            <div class="costume-img">
-                                <i class="fas fa-mask"></i>
-                            </div>
-                            <div class="costume-info">
-                                <h4>Disfraz de Superhéroe</h4>
-                                <p>Talla M | ID: 1234</p>
-                                <span class="status rented">Rentado</span>
-                            </div>
-                        </div>
-                        <div class="costume-card">
-                            <div class="costume-img">
-                                <i class="fas fa-hat-wizard"></i>
-                            </div>
-                            <div class="costume-info">
-                                <h4>Bruja Elegante</h4>
-                                <p>Talla S | ID: 2156</p>
-                                <span class="status available">Disponible</span>
-                            </div>
-                        </div>
-                        <div class="costume-card">
-                            <div class="costume-img">
-                                <i class="fas fa-crown"></i>
-                            </div>
-                            <div class="costume-info">
-                                <h4>Princesa Encantada</h4>
-                                <p>Talla L | ID: 3378</p>
-                                <span class="status maintenance">Mantenimiento</span>
-                            </div>
+                        <div class="product-list scrollbar-custom">
+                            <?php if(!empty($prendasPopulares)): ?>
+                                <?php foreach($prendasPopulares as $index => $prenda): ?>
+                                <div class="costume-card">
+                                    <div class="costume-img">
+                                        <i class="fas fa-tshirt"></i>
+                                    </div>
+                                    <div class="costume-info">
+                                        <h4><?php echo htmlspecialchars($prenda['Nombre']); ?></h4>
+                                        <div style="margin: 5px 0;">
+                                            <span class="category-badge"><?php echo htmlspecialchars($prenda['Categoria']); ?></span>
+                                        </div>
+                                        <div class="color-display">
+                                            <?php if(!empty($prenda['ColorPrimario'])): ?>
+                                                <span class="color-badge"><?php echo htmlspecialchars($prenda['ColorPrimario']); ?></span>
+                                            <?php endif; ?>
+                                            <?php if(!empty($prenda['ColorSecundario'])): ?>
+                                                <span class="color-badge"><?php echo htmlspecialchars($prenda['ColorSecundario']); ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <span class="status popular">
+                                            <?php echo $prenda['TotalRentado']; ?> veces rentado
+                                        </span>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="costume-card">
+                                    <div class="costume-info">
+                                        <h4>No hay datos disponibles</h4>
+                                        <p>No se encontraron prendas rentadas este mes</p>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                     
                     <div class="chart-card">
                         <h3>
-                            Próximos Eventos
-                            <span>Ver calendario</span>
+                            Inventario de Productos
+                            <span>Stock disponible</span>
                         </h3>
-                        <div class="event-list">
-                            <div class="costume-card">
-                                <div class="costume-img" style="background-color: rgba(255, 107, 138, 0.1); color: var(--primary);">
-                                    <i class="fas fa-calendar-day"></i>
+                        <div class="product-list scrollbar-custom">
+                            <?php if(!empty($productosInventario)): ?>
+                                <?php foreach($productosInventario as $producto): ?>
+                                <div class="costume-card">
+                                    <div class="costume-img" style="background-color: rgba(46, 204, 113, 0.1); color: var(--success);">
+                                        <i class="fas fa-tshirt"></i>
+                                    </div>
+                                    <div class="costume-info">
+                                        <h4><?php echo htmlspecialchars($producto['Nombre']); ?></h4>
+                                        <div style="margin: 5px 0;">
+                                            <span class="category-badge"><?php echo htmlspecialchars($producto['Categoria']); ?></span>
+                                        </div>
+                                        <div class="color-display">
+                                            <?php if(!empty($producto['ColorPrimario'])): ?>
+                                                <span class="color-badge"><?php echo htmlspecialchars($producto['ColorPrimario']); ?></span>
+                                            <?php endif; ?>
+                                            <?php if(!empty($producto['ColorSecundario'])): ?>
+                                                <span class="color-badge"><?php echo htmlspecialchars($producto['ColorSecundario']); ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="stock-info">
+                                            <span class="stock-available">
+                                                <i class="fas fa-check-circle"></i> Disponible: <?php echo $producto['StockDisponible']; ?>
+                                            </span>
+                                            <span class="stock-rented">
+                                                <i class="fas fa-clock"></i> Rentado: <?php echo $producto['CantidadRentada']; ?>
+                                            </span>
+                                            <span class="stock-total">
+                                                <i class="fas fa-box"></i> Total: <?php echo $producto['Stock']; ?>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="costume-info">
-                                    <h4>Carnaval Municipal</h4>
-                                    <p>15 de Abril, 2025</p>
-                                    <p>42 reservas anticipadas</p>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="costume-card">
+                                    <div class="costume-info">
+                                        <h4>No hay productos disponibles</h4>
+                                        <p>No se encontraron productos en el inventario</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="costume-card">
-                                <div class="costume-img" style="background-color: rgba(138, 79, 255, 0.1); color: var(--secondary);">
-                                    <i class="fas fa-calendar-day"></i>
-                                </div>
-                                <div class="costume-info">
-                                    <h4>Fiesta de Disfraces Universitaria</h4>
-                                    <p>28 de Abril, 2025</p>
-                                    <p>27 reservas anticipadas</p>
-                                </div>
-                            </div>
-                            <div class="costume-card">
-                                <div class="costume-img" style="background-color: rgba(46, 204, 113, 0.1); color: var(--success);">
-                                    <i class="fas fa-calendar-day"></i>
-                                </div>
-                                <div class="costume-info">
-                                    <h4>Fantasía Medieval</h4>
-                                    <p>10 de Mayo, 2025</p>
-                                    <p>18 reservas anticipadas</p>
-                                </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

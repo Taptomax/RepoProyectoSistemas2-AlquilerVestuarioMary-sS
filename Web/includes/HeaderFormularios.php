@@ -344,6 +344,53 @@ $companyLogo = '../Resources/imgs/MarysSLogoST.png'; // Ruta a tu logo
     color: var(--danger-hover);
 }
 
+/* ============== ESTILOS PARA IMPRESIÓN ============== */
+@media print {
+    /* Ocultar completamente el header */
+    .header-container {
+        display: none !important;
+    }
+    
+    /* Eliminar el margin-top del contenido principal para que ocupe todo el espacio */
+    .container,
+    body > *:not(.header-container) {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    /* Reset del body para impresión */
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        color: black !important;
+    }
+    
+    /* Asegurar que el contenido principal sea visible */
+    main,
+    .main-content,
+    .content {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    /* Opcional: Agregar un pequeño encabezado solo para impresión */
+    .print-header {
+        display: block !important;
+        text-align: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+}
+
+/* Clase para encabezado solo visible en impresión (opcional) */
+.print-header {
+    display: none;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .header-container {
@@ -513,7 +560,7 @@ $companyLogo = '../Resources/imgs/MarysSLogoST.png'; // Ruta a tu logo
 
         <!-- Botones de navegación - Centro -->
         <div class="nav-buttons">
-            <button onclick="window.history.back()" 
+            <button onclick="window.location.href = '../Views/ManagerDB.php'" 
                     class="nav-btn btn-back" 
                     title="Volver atrás"
                     aria-label="Volver atrás">

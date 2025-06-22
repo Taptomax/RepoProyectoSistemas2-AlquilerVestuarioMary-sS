@@ -53,11 +53,76 @@ $(document).ready(function() {
         return false;
     }
 }
+
+
+    function validarProducto(productoCard) {
+    const productoSelect = productoCard.find('.producto-select');
+    const cantidadInput = productoCard.find('.cantidad-producto');
     
+    const productoSeleccionado = productoSelect.val();
+    const cantidadValue = cantidadInput.val();
+    const cantidadNum = parseInt(cantidadValue);
+    
+    const productoValido = productoSeleccionado !== '' && productoSeleccionado !== null;
+    const cantidadValida = cantidadValue !== '' && !isNaN(cantidadNum) && cantidadNum > 0;
+    
+    const esValido = productoValido && cantidadValida;
+    
+    const errorContainer = productoCard.find('.validation-error-producto');
+    
+    if (esValido) {
+        productoCard.removeClass('producto-invalid');
+        errorContainer.hide();
+        return true;
+    } else {
+        productoCard.addClass('producto-invalid');
+        
+        let mensaje = 'Complete los datos: ';
+        let errores = [];
+        
+        if (!productoValido) errores.push('seleccione un producto');
+        if (!cantidadValida) errores.push('ingrese cantidad válida');
+        
+        mensaje += errores.join(', ');
+        errorContainer.text(mensaje).show();
+        return false;
+    }
+}
+    
+    function validarGarantiaCompleta(garantiaCard) {
+    const tipoInput = garantiaCard.find('.tipo-garantia-input');
+    const clienteSelect = garantiaCard.find('.cliente-garantia-select');
+    
+    const tipoValido = validarGarantia(tipoInput);
+    const clienteValido = clienteSelect.val() !== '';
+    
+    const esValido = tipoValido && clienteValido;
+    
+    const errorContainer = garantiaCard.find('.validation-error-garantia');
+    
+    if (esValido) {
+        garantiaCard.removeClass('garantia-invalid');
+        errorContainer.hide();
+        return true;
+    } else {
+        garantiaCard.addClass('garantia-invalid');
+        
+        let mensaje = 'Complete los datos: ';
+        let errores = [];
+        
+        if (!tipoValido) errores.push('tipo de garantía válido');
+        if (!clienteValido) errores.push('seleccione un cliente');
+        
+        mensaje += errores.join(', ');
+        errorContainer.text(mensaje).show();
+        return false;
+    }
+}
+
     // Función para validar teléfono
     function validarTelefono(input) {
         const valor = input.val().trim();
-        const regex = /^[0-9]{8}$/; // Exactamente 8 dígitos
+        const regex = /^[5-7][0-9]{7}$/; // Primer dígito 5, 6 o 7, seguido de 7 dígitos más
         const esValido = regex.test(valor);
         
         if (esValido) {
@@ -155,43 +220,116 @@ $(document).ready(function() {
         $(this).val(valorTrimmed);
         validarGarantia($(this));
     });
+
+    $(document).on('change', '.producto-select, .cantidad-producto', function() {
+        const productoCard = $(this).closest('.producto-card');
+        validarProducto(productoCard);
+    });
+
+    $(document).on('input', '.cantidad-producto', function() {
+        const productoCard = $(this).closest('.producto-card');
+        validarProducto(productoCard);
+    });
+
+    $(document).on('input blur', '.tipo-garantia-input', function() {
+        const garantiaCard = $(this).closest('.garantia-card');
+        setTimeout(() => validarGarantiaCompleta(garantiaCard), 100);
+    });
+
+    $(document).on('change', '.cliente-garantia-select', function() {
+        const garantiaCard = $(this).closest('.garantia-card');
+        validarGarantiaCompleta(garantiaCard);
+    });
     
     // Actualizar información del producto y calcular subtotal
     $(document).on('change', '.producto-select', function() {
-        const index = $(this).closest('.producto-card').data('index');
-        const selected = $(this).find('option:selected');
+    console.log('Producto select changed'); // Debug
+    const productoCard = $(this).closest('.producto-card');
+    setTimeout(() => {
+        validarProducto(productoCard);
+    }, 100);
+});
+
+$(document).on('input change', '.cantidad-producto', function() {
+    console.log('Cantidad changed'); // Debug
+    const productoCard = $(this).closest('.producto-card');
+    setTimeout(() => {
+        validarProducto(productoCard);
+    }, 100);
+});
+
+$(document).on('change', '.producto-select', function() {
+    $(this).removeClass('is-invalid');
+    const productoCard = $(this).closest('.producto-card');
+    productoCard.find('.validation-error-producto').hide();
+    
+    // Actualizar información del producto
+    const selected = $(this).find('option:selected');
+    const index = productoCard.data('index');
+    
+    if (selected.val()) {
+        const info = {
+            nombre: selected.data('nombre'),
+            categoria: selected.data('categoria'),
+            color: selected.data('color'),
+            disponible: selected.data('disponible'),
+            precio: selected.data('precio')
+        };
         
-        if (selected.val()) {
-            const nombre = selected.data('nombre');
-            const categoria = selected.data('categoria');
-            const color = selected.data('color');
-            const precio = selected.data('precio');
-            const disponible = selected.data('disponible');
-            
-            // Mostrar información del producto
-            const infoContainer = $(`#info_producto_${index}`);
-            infoContainer.find('.info-nombre').text(nombre);
-            infoContainer.find('.info-categoria').text(categoria);
-            infoContainer.find('.info-color').text(color);
-            infoContainer.find('.info-disponible').text(disponible);
-            infoContainer.show();
-            
-            // Limitar la cantidad máxima según disponibilidad
-            $(`#cantidad_${index}`).attr('max', disponible);
-            
-            // Calcular subtotal
-            const cantidad = parseInt($(`#cantidad_${index}`).val()) || 0;
-            const subtotal = cantidad * precio;
-            $(`#subtotal_${index}`).val(subtotal);
-            
-            // Actualizar totales
-            calcularTotales();
-        } else {
-            $(`#info_producto_${index}`).hide();
-            $(`#subtotal_${index}`).val('');
-            calcularTotales();
+        // Mostrar información del producto
+        const infoDiv = productoCard.find('.producto-info');
+        infoDiv.find('.info-nombre').text(info.nombre);
+        infoDiv.find('.info-categoria').text(info.categoria);
+        infoDiv.find('.info-color').text(info.color);
+        infoDiv.find('.info-disponible').text(info.disponible);
+        infoDiv.show();
+        
+        // Actualizar límite de cantidad
+        const cantidadInput = productoCard.find('.cantidad-producto');
+        cantidadInput.attr('max', info.disponible);
+        
+        // Calcular subtotal si hay cantidad
+        const cantidad = parseInt(cantidadInput.val()) || 1;
+        if (cantidad > info.disponible) {
+            cantidadInput.val(info.disponible);
         }
-    });
+        
+        const subtotal = (parseInt(cantidadInput.val()) || 1) * info.precio;
+        productoCard.find('.subtotal-producto').val(subtotal);
+        
+        calcularTotales();
+    } else {
+        // Ocultar información y limpiar subtotal
+        productoCard.find('.producto-info').hide();
+        productoCard.find('.subtotal-producto').val('');
+        calcularTotales();
+    }
+});
+
+// Limpiar estilos de error cuando se cambia la cantidad
+$(document).on('input change', '.cantidad-producto', function() {
+    const valor = parseInt($(this).val());
+    if (valor > 0) {
+        $(this).removeClass('is-invalid');
+    }
+    
+    const productoCard = $(this).closest('.producto-card');
+    productoCard.find('.validation-error-producto').hide();
+});
+
+// Validación en tiempo real más estricta
+$(document).on('blur', '.producto-select', function() {
+    if (!$(this).val()) {
+        $(this).addClass('is-invalid');
+    }
+});
+
+$(document).on('blur', '.cantidad-producto', function() {
+    const valor = parseInt($(this).val());
+    if (!valor || valor <= 0) {
+        $(this).addClass('is-invalid');
+    }
+});
     
     // Actualizar subtotal cuando cambia la cantidad
     $(document).on('input', '.cantidad-producto', function() {
@@ -286,7 +424,7 @@ $(document).ready(function() {
                     </div>
                     <div class="form-group">
                         <label for="telefono_${clienteIndex}">Teléfono</label>
-                        <input type="text" id="telefono_${clienteIndex}" name="clientes[${clienteIndex}][telefono]" class="form-control telefono-cliente" required maxlength="8">
+                        <input type="text" min="59999999" max="79999999" id="telefono_${clienteIndex}" name="clientes[${clienteIndex}][telefono]" class="form-control telefono-cliente" required maxlength="8">
                         <span class="check-icon">✓</span>
                         <div class="validation-error">Ingrese un número de teléfono boliviano válido de 8 dígitos</div>
                     </div>
@@ -297,65 +435,117 @@ $(document).ready(function() {
         $('#clientes-container').append(nuevoCliente);
     });
     
-    // Agregar producto
-    $('#agregar-producto').click(function() {
-        // Mostrar botón de eliminar en el producto anterior si existe
-        if ($('.producto-card').length > 0) {
-            $('.producto-card').last().find('.remove-producto').show();
+    // Agregar producto - VALIDACIÓN CORREGIDA
+$('#agregar-producto').click(function() {
+    console.log('Botón agregar producto clickeado');
+    
+    // Verificar si hay productos existentes
+    const productosExistentes = $('.producto-card');
+    
+    if (productosExistentes.length > 0) {
+        // Obtener el último producto
+        const ultimoProducto = productosExistentes.last();
+        const productoSelect = ultimoProducto.find('.producto-select');
+        const cantidadInput = ultimoProducto.find('.cantidad-producto');
+        
+        console.log('Validando último producto...');
+        console.log('Producto seleccionado:', productoSelect.val());
+        console.log('Cantidad:', cantidadInput.val());
+        
+        // Validación más estricta
+        const tieneProductoSeleccionado = productoSelect.val() !== null && productoSelect.val() !== '' && productoSelect.val() !== undefined;
+        const cantidadValue = cantidadInput.val();
+        const tieneCantidadValida = cantidadValue !== '' && cantidadValue !== null && !isNaN(cantidadValue) && parseInt(cantidadValue) > 0;
+        
+        if (!tieneProductoSeleccionado || !tieneCantidadValida) {
+            console.log('Validación falló');
+            let mensaje = 'Complete el producto actual:\n';
+            let errores = [];
+            
+            if (!tieneProductoSeleccionado) errores.push('• Seleccione un producto');
+            if (!tieneCantidadValida) errores.push('• Ingrese una cantidad válida mayor a 0');
+            
+            mensaje += errores.join('\n');
+            alert(mensaje);
+            
+            // Marcar visualmente el error
+            if (!tieneProductoSeleccionado) {
+                productoSelect.addClass('is-invalid');
+            }
+            if (!tieneCantidadValida) {
+                cantidadInput.addClass('is-invalid');
+            }
+            
+            return false;
         }
         
-        // Incrementar índice
-        productoIndex++;
-        
-        // Obtener todas las opciones de productos del primer select
-        let opcionesProductos = '';
-        $('#producto_0 option').each(function() {
+        // Si llegamos aquí, el producto está válido
+        ultimoProducto.find('.remove-producto').show();
+        console.log('Producto anterior validado correctamente');
+    }
+    
+    // Incrementar índice
+    productoIndex++;
+    console.log('Creando producto con índice:', productoIndex);
+    
+    // Obtener todas las opciones de productos del primer select
+    let opcionesProductos = '';
+    const primerSelect = $('.producto-select').first();
+    
+    if (primerSelect.length > 0) {
+        primerSelect.find('option').each(function() {
             let option = $(this);
             opcionesProductos += `<option value="${option.val()}" 
-                                    data-nombre="${option.data('nombre')}"
-                                    data-categoria="${option.data('categoria')}"
-                                    data-color="${option.data('color')}"
-                                    data-precio="${option.data('precio')}"
-                                    data-disponible="${option.data('disponible')}">
+                                    data-nombre="${option.data('nombre') || ''}"
+                                    data-categoria="${option.data('categoria') || ''}"
+                                    data-color="${option.data('color') || ''}"
+                                    data-precio="${option.data('precio') || ''}"
+                                    data-disponible="${option.data('disponible') || ''}">
                                     ${option.text()}
                                   </option>`;
         });
-        
-        // Crear nuevo producto con las opciones copiadas
-        const nuevoProducto = `
-            <div class="producto-card" data-index="${productoIndex}">
-                <div class="remove-producto">&times;</div>
-                <div class="input-group">
-                    <div class="form-group">
-                        <label for="producto_${productoIndex}">Producto</label>
-                        <select id="producto_${productoIndex}" name="productos[${productoIndex}][producto_id]" class="form-select producto-select" required>
-                            ${opcionesProductos}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cantidad_${productoIndex}">Cantidad</label>
-                        <input type="number" id="cantidad_${productoIndex}" name="productos[${productoIndex}][cantidad]" class="form-control cantidad-producto" min="1" value="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Subtotal</label>
-                        <div class="input-group">
-                            <span style="padding: 14px 5px 0 0;">Bs.</span>
-                            <input type="text" id="subtotal_${productoIndex}" name="productos[${productoIndex}][subtotal]" class="form-control subtotal-producto" readonly>
-                        </div>
-                    </div>
+    }
+    
+    // Crear nuevo producto
+    const nuevoProducto = `
+        <div class="producto-card" data-index="${productoIndex}">
+            <div class="remove-producto" style="display: none;">&times;</div>
+            <div class="input-group">
+                <div class="form-group">
+                    <label for="producto_${productoIndex}">Producto</label>
+                    <select id="producto_${productoIndex}" name="productos[${productoIndex}][producto_id]" class="form-select producto-select" required>
+                        ${opcionesProductos}
+                    </select>
                 </div>
-                <div class="producto-info" id="info_producto_${productoIndex}" style="display: none;">
-                    <p><strong>Producto:</strong> <span class="info-nombre"></span></p>
-                    <p><strong>Categoría:</strong> <span class="info-categoria"></span></p>
-                    <p><strong>Color:</strong> <span class="info-color"></span></p>
-                    <p><strong>Disponibilidad:</strong> <span class="info-disponible"></span> unidades</p>
+                <div class="form-group">
+                    <label for="cantidad_${productoIndex}">Cantidad</label>
+                    <input type="number" id="cantidad_${productoIndex}" name="productos[${productoIndex}][cantidad]" class="form-control cantidad-producto" min="1" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Subtotal</label>
+                    <div class="input-group">
+                        <span style="padding: 14px 5px 0 0;">Bs.</span>
+                        <input type="text" id="subtotal_${productoIndex}" name="productos[${productoIndex}][subtotal]" class="form-control subtotal-producto" readonly>
+                    </div>
                 </div>
             </div>
-        `;
-        
-        $('#productos-container').append(nuevoProducto);
-        $(`#producto_${productoIndex}`).select2();
-    });
+            <div class="validation-error-producto" style="color: red; font-size: 0.875em; margin-top: 5px; display: none;"></div>
+            <div class="producto-info" id="info_producto_${productoIndex}" style="display: none;">
+                <p><strong>Producto:</strong> <span class="info-nombre"></span></p>
+                <p><strong>Categoría:</strong> <span class="info-categoria"></span></p>
+                <p><strong>Color:</strong> <span class="info-color"></span></p>
+                <p><strong>Disponibilidad:</strong> <span class="info-disponible"></span> unidades</p>
+            </div>
+        </div>
+    `;
+    
+    $('#productos-container').append(nuevoProducto);
+    
+    // Inicializar Select2 para el nuevo producto
+    $(`#producto_${productoIndex}`).select2();
+    
+    console.log('Producto agregado exitosamente con índice:', productoIndex);
+});
     
     // Agregar garantía - VALIDACIÓN MEJORADA
     $('#agregar-garantia').click(function() {
@@ -407,6 +597,7 @@ $(document).ready(function() {
                         </select>
                     </div>
                 </div>
+                <div class="validation-error-garantia" style="color: red; font-size: 0.875em; margin-top: 5px; display: none;"></div>
             </div>
         `;
         

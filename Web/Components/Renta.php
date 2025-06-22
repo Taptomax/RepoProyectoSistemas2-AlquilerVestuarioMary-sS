@@ -76,7 +76,7 @@ $fecha_maxima = date('Y-m-d', strtotime('+15 days'));
                         </div>
                         <div class="form-group">
                             <label for="telefono_0">Teléfono</label>
-                            <input type="text" id="telefono_0" name="clientes[0][telefono]" class="form-control telefono-cliente" required>
+                            <input type="text" id="telefono_0" min="59999999" max="79999999" name="clientes[0][telefono]" class="form-control telefono-cliente" required>
                             <span class="check-icon">✓</span>
                             <div class="validation-error">Ingrese un número de teléfono válido de 8 dígitos</div>
                         </div>
@@ -88,51 +88,52 @@ $fecha_maxima = date('Y-m-d', strtotime('+15 days'));
             <!-- Productos -->
             <h2 class="section-title">Productos a Rentar</h2>
             <div id="productos-container">
-                <div class="producto-card" data-index="0">
-                    <div class="remove-producto" style="display: none;">&times;</div>
-                    <div class="input-group">
-                        <div class="form-group">
-                            <label for="producto_0">Producto</label>
-                            <select id="producto_0" name="productos[0][producto_id]" class="form-select producto-select" required>
-                                <option value="">Seleccione un producto</option>
-                                <?php foreach ($productos as $producto): ?>
-                                    <?php 
-                                    $colorInfo = $producto['Color1'];
-                                    if (!empty($producto['Color2'])) {
-                                        $colorInfo .= ' con ' . $producto['Color2'];
-                                    }
-                                    ?>
-                                    <option value="<?php echo $producto['ProductoID']; ?>" 
-                                            data-nombre="<?php echo $producto['Nombre']; ?>"
-                                            data-categoria="<?php echo $producto['Categoria']; ?>"
-                                            data-color="<?php echo $colorInfo; ?>"
-                                            data-precio="<?php echo $producto['PrecioUnitario']; ?>"
-                                            data-disponible="<?php echo $producto['Disponible']; ?>">
-                                        <?php echo $producto['Nombre'] . ' - ' . $colorInfo . ' (Bs. ' . $producto['PrecioUnitario'] . ')'; ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="cantidad_0">Cantidad</label>
-                            <input type="number" id="cantidad_0" name="productos[0][cantidad]" class="form-control cantidad-producto" min="1" value="1" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Subtotal</label>
-                            <div class="input-group">
-                                <span style="padding: 14px 5px 0 0;">Bs.</span>
-                                <input type="text" id="subtotal_0" name="productos[0][subtotal]" class="form-control subtotal-producto" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="producto-info" id="info_producto_0" style="display: none;">
-                        <p><strong>Producto:</strong> <span class="info-nombre"></span></p>
-                        <p><strong>Categoría:</strong> <span class="info-categoria"></span></p>
-                        <p><strong>Color:</strong> <span class="info-color"></span></p>
-                        <p><strong>Disponibilidad:</strong> <span class="info-disponible"></span> unidades</p>
-                    </div>
+    <div class="producto-card" data-index="0">
+        <div class="remove-producto" style="display: none;">&times;</div>
+        <div class="input-group">
+            <div class="form-group">
+                <label for="producto_0">Producto</label>
+                <select id="producto_0" name="productos[0][producto_id]" class="form-select producto-select" required>
+                    <option value="">Seleccione un producto</option>
+                    <?php foreach ($productos as $producto): ?>
+                        <?php 
+                        $colorInfo = $producto['Color1'];
+                        if (!empty($producto['Color2'])) {
+                            $colorInfo .= ' con ' . $producto['Color2'];
+                        }
+                        ?>
+                        <option value="<?php echo $producto['ProductoID']; ?>" 
+                                data-nombre="<?php echo $producto['Nombre']; ?>"
+                                data-categoria="<?php echo $producto['Categoria']; ?>"
+                                data-color="<?php echo $colorInfo; ?>"
+                                data-precio="<?php echo $producto['PrecioUnitario']; ?>"
+                                data-disponible="<?php echo $producto['Disponible']; ?>">
+                            <?php echo $producto['Nombre'] . ' - ' . $colorInfo . ' (Bs. ' . $producto['PrecioUnitario'] . ')'; ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cantidad_0">Cantidad</label>
+                <input type="number" id="cantidad_0" name="productos[0][cantidad]" class="form-control cantidad-producto" min="1" value="1" required>
+            </div>
+            <div class="form-group">
+                <label>Subtotal</label>
+                <div class="input-group">
+                    <input type="text" id="subtotal_0" placeholder="Bs." name="productos[0][subtotal]" class="form-control subtotal-producto" readonly>
                 </div>
             </div>
+        </div>
+        
+        <div class="validation-error-producto" style="color: red; font-size: 0.875em; margin-top: 5px; display: none;"></div>
+        <div class="producto-info" id="info_producto_0" style="display: none;">
+            <p><strong>Producto:</strong> <span class="info-nombre"></span></p>
+            <p><strong>Categoría:</strong> <span class="info-categoria"></span></p>
+            <p><strong>Color:</strong> <span class="info-color"></span></p>
+            <p><strong>Disponibilidad:</strong> <span class="info-disponible"></span> unidades</p>
+        </div>
+    </div>
+</div>
             <button type="button" id="agregar-producto" class="btn-add">Agregar Otro Producto</button>
             
             <!-- Garantías -->

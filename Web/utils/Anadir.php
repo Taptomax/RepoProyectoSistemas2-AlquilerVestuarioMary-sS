@@ -525,7 +525,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["IdCosa"])) {
             
             switch ($tipo_campo) {
                 case 'select_categoria':
-                    echo "<select class='form-control' id='$campo' name='$campo' onchange='toggleNuevaCategoria(this)'>";
+                    echo "<select class='form-control' id='$campo' name='$campo' required onchange='toggleNuevaCategoria(this)'>";
                     echo "<option value=''>Seleccione una categoría</option>";
                     
                     $result = $con->query("SELECT CategoriaID, Categoria FROM Categoria ORDER BY Categoria");

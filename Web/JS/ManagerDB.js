@@ -120,7 +120,7 @@ document.getElementById('menu-dashboard').addEventListener('click', function() {
 });
 
 document.getElementById('menu-reportes').addEventListener('click', function() {
-    loadContent('reportes');
+    window.location.href = '../Components/Reportes.php'
 });
 
 document.getElementById('menu-rentactiva').addEventListener('click', function() {
@@ -136,7 +136,7 @@ document.getElementById('menu-registrorentas').addEventListener('click', functio
 });
 
 document.getElementById('menu-lote').addEventListener('click', function() {
-    loadContent('registrar_lote');
+    window.location.href = '../Components/RegistrarLotes.php'
 });
 
 document.getElementById('menu-renta').addEventListener('click', function() {

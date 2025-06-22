@@ -1,5 +1,6 @@
 <?php
 include('../includes/Connection.php');
+include('../includes/VerifySession.php');
 
 $connection = connection();
 
@@ -14,6 +15,12 @@ function eliminarEmpleado($empleadoID) {
     $stmt->execute();
     $stmt->close();
     $con->close();
+
+    /*if ($empleadoID == $_SESSION['idUser']) {
+        session_destroy();
+        header("Location: ../views/StartSession.php");
+        exit;
+    }*/
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -34,6 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param('s', $id);
         $stmt->execute();
         $stmt->close();
+
+        /*if ($empleadoID == $_SESSION['idUser']) {
+            session_destroy();
+            header("Location: ../views/StartSession.php");
+            exit;
+        }*/
     }
     
     if ($id && $accion === 'eliminar') {
@@ -84,8 +97,9 @@ if ($resultado && $resultado->num_rows > 0) {
                         <button type='submit' class='action-btn edit-btn' title='Editar'>
                             <i class='bi bi-pencil-square'></i>
                         </button>
-                    </form>
-                    <form action='../utils/ActivacionEmpleado.php' method='POST' style='display:inline;'>
+                    </form>";
+                    if($empleado['EmpleadoID'] != $_SESSION['idUser']){
+                    echo "<form action='../utils/ActivacionEmpleado.php' method='POST' style='display:inline;'>
                         <input type='hidden' name='empleadoID' value='" . htmlspecialchars($empleado['EmpleadoID']) . "'>
                         <button type='submit' class='action-btn toggle-btn' title='Cambiar estado'>
                             <i class='fas fa-power-off'></i>
@@ -97,8 +111,9 @@ if ($resultado && $resultado->num_rows > 0) {
                             onclick=\"return confirm('¿Seguro que deseas enviar este empleado a la papelera?')\">
                             <i class='bi bi-trash-fill'></i>
                         </button>
-                    </form>
-                </div>
+                    </form>";
+                    }
+                echo "</div>
             </td>
         </tr>";
     }
