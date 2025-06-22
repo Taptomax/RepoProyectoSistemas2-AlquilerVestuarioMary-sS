@@ -25,23 +25,25 @@ function mostrarElementosInhabilitados($con, $tabla, $id_col, $campos, $prefijo 
             }
             
             echo "<td>
-                <form method='POST' onsubmit='return confirmarRestauracion();'>
-                    <input type='hidden' name='tabla' value='" . htmlspecialchars($tabla) . "'>
-                    <input type='hidden' name='id_col' value='" . htmlspecialchars($id_col) . "'>
-                    <input type='hidden' name='id_valor' value='" . htmlspecialchars($elemento[$id_col]) . "'> 
-                    <input type='hidden' name='IDCosa' value='" . htmlspecialchars($id_completo) . "'>
-                    <button type='submit' name='restaurar' class='action-btn restore-btn' title='Restaurar'>
-                        <i class='bi bi-arrow-counterclockwise'></i>
-                    </button>
-                </form>
-                <form method='POST' onsubmit='return confirmarEliminacion();'>
-                    <input type='hidden' name='tabla' value='" . htmlspecialchars($tabla) . "'>
-                    <input type='hidden' name='id_col' value='" . htmlspecialchars($id_col) . "'>
-                    <input type='hidden' name='id_valor' value='" . htmlspecialchars($elemento[$id_col]) . "'>
-                    <button type='submit' name='eliminar' class='action-btn delete-btn' title='Eliminar permanentemente'>
-                        <i class='bi bi-trash-fill'></i>
-                    </button>
-                </form>
+                <div class='action-buttons'>
+                    <form method='POST' onsubmit='return confirmarRestauracion();' style='display: inline-block;'>
+                        <input type='hidden' name='tabla' value='" . htmlspecialchars($tabla) . "'>
+                        <input type='hidden' name='id_col' value='" . htmlspecialchars($id_col) . "'>
+                        <input type='hidden' name='id_valor' value='" . htmlspecialchars($elemento[$id_col]) . "'> 
+                        <input type='hidden' name='IDCosa' value='" . htmlspecialchars($id_completo) . "'>
+                        <button type='submit' name='restaurar' class='action-btn restore-btn' title='Restaurar'>
+                            <i class='bi bi-arrow-clockwise'></i>
+                        </button>
+                    </form>
+                    <form method='POST' onsubmit='return confirmarEliminacion();' style='display: inline-block;'>
+                        <input type='hidden' name='tabla' value='" . htmlspecialchars($tabla) . "'>
+                        <input type='hidden' name='id_col' value='" . htmlspecialchars($id_col) . "'>
+                        <input type='hidden' name='id_valor' value='" . htmlspecialchars($elemento[$id_col]) . "'>
+                        <button type='submit' name='eliminar' class='action-btn delete-btn' title='Eliminar permanentemente'>
+                            <i class='bi bi-trash-fill'></i>
+                        </button>
+                    </form>
+                </div>
             </td>";
             echo "</tr>";
         }

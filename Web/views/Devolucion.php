@@ -243,8 +243,8 @@ $tiposDamage = obtenerTiposDamage($conn);
                                 <td><?php echo htmlspecialchars($producto['ProductoID']); ?></td>
                                 <td><?php echo htmlspecialchars($producto['Nombre']); ?></td>
                                 <td class="cantidad-rentada"><?php echo $producto['Cantidad']; ?></td>
-                                <td>$<?php echo number_format($producto['PrecioUnitario']); ?></td>
-                                <td>$<?php echo number_format($producto['Subtotal']); ?></td>
+                                <td>Bs.<?php echo number_format($producto['PrecioUnitario']); ?></td>
+                                <td>Bs.<?php echo number_format($producto['Subtotal']); ?></td>
                                 <td>
                                     <div class="cantidad-controls">
                                         <div class="cantidad-row">
@@ -265,7 +265,7 @@ $tiposDamage = obtenerTiposDamage($conn);
                                                     <option value="">Seleccionar daño</option>
                                                     <?php foreach ($tiposDamage as $damage): ?>
                                                     <option value="<?php echo $damage['DamageID']; ?>" data-multa="<?php echo $damage['Multa']; ?>">
-                                                        <?php echo htmlspecialchars($damage['Caso']); ?> ($<?php echo number_format($damage['Multa']); ?>)
+                                                        <?php echo htmlspecialchars($damage['Caso']); ?> (Bs.<?php echo number_format($damage['Multa']); ?>)
                                                     </option>
                                                     <?php endforeach; ?>
                                                 </select>
@@ -309,23 +309,23 @@ $tiposDamage = obtenerTiposDamage($conn);
                         <h3>Resumen de Multas</h3>
                         <div class="summary-item">
                             <span>Total Original:</span>
-                            <span id="total-original">$<?php echo number_format($rentaDatos['Total']); ?></span>
+                            <span id="total-original">Bs.<?php echo number_format($rentaDatos['Total']); ?></span>
                         </div>
                         <div class="summary-item">
                             <span>Total Multas por Daños:</span>
-                            <span id="total-multas-dano">$0</span>
+                            <span id="total-multas-dano">Bs.0</span>
                         </div>
                         <div class="summary-item">
                             <span>Total Multas por Eliminación:</span>
-                            <span id="total-multas-eliminacion">$0</span>
+                            <span id="total-multas-eliminacion">Bs.0</span>
                         </div>
                         <div class="summary-item">
                             <span>Total Multas:</span>
-                            <span id="total-multas">$0</span>
+                            <span id="total-multas">Bs.0</span>
                         </div>
                         <div class="summary-item total">
                             <span>Total Final:</span>
-                            <span id="total-final">$<?php echo number_format($rentaDatos['Total']); ?></span>
+                            <span id="total-final">Bs.<?php echo number_format($rentaDatos['Total']); ?></span>
                         </div>
                     </div>
                     
@@ -383,7 +383,7 @@ $tiposDamage = obtenerTiposDamage($conn);
                     <option value="">Seleccionar daño</option>
                     <?php foreach ($tiposDamage as $damage): ?>
                     <option value="<?php echo $damage['DamageID']; ?>" data-multa="<?php echo $damage['Multa']; ?>">
-                        <?php echo htmlspecialchars($damage['Caso']); ?> ($<?php echo number_format($damage['Multa']); ?>)
+                        <?php echo htmlspecialchars($damage['Caso']); ?> (Bs.<?php echo number_format($damage['Multa']); ?>)
                     </option>
                     <?php endforeach; ?>
                 </select>
@@ -497,10 +497,10 @@ $tiposDamage = obtenerTiposDamage($conn);
             const totalMultas = totalMultasDano + totalMultasEliminacion;
             const totalFinal = rentaActual.total + totalMultas;
             
-            document.getElementById('total-multas-dano').textContent = '$' + totalMultasDano.toLocaleString();
-            document.getElementById('total-multas-eliminacion').textContent = '$' + totalMultasEliminacion.toLocaleString();
-            document.getElementById('total-multas').textContent = '$' + totalMultas.toLocaleString();
-            document.getElementById('total-final').textContent = '$' + totalFinal.toLocaleString();
+            document.getElementById('total-multas-dano').textContent = 'Bs.' + totalMultasDano.toLocaleString();
+            document.getElementById('total-multas-eliminacion').textContent = 'Bs.' + totalMultasEliminacion.toLocaleString();
+            document.getElementById('total-multas').textContent = 'Bs.' + totalMultas.toLocaleString();
+            document.getElementById('total-final').textContent = 'Bs.' + totalFinal.toLocaleString();
         }
         
         function validarFormulario(e) {

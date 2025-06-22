@@ -296,3 +296,40 @@ body {
         flex: 100%;
     }
 }
+
+/* Agregar al archivo CSS existente */
+
+/* Estilos para campos inválidos */
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* Contenedor de producto con error */
+.producto-card.producto-invalid {
+    border: 2px solid #dc3545;
+    background-color: #fff5f5;
+}
+
+/* Mensaje de error para productos */
+.validation-error-producto {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 5px;
+    padding: 5px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+}
+
+/* Animación para mostrar errores */
+.validation-error-producto.show {
+    display: block !important;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

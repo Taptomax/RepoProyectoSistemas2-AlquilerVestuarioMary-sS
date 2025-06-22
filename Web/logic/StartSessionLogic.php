@@ -6,7 +6,7 @@ date_default_timezone_set('America/La_Paz');
 
 define('MAX_LOGIN_ATTEMPTS', 2);
 define('LOCKOUT_TIME', 0.5 * 60);
-define('SESSION_LIFETIME', 0.5 * 60);
+define('SESSION_LIFETIME', 30 * 60);
 define('MAX_LOCKOUTS', 2); 
 
 if (isset($_SESSION['expire_time']) && time() > $_SESSION['expire_time']) {

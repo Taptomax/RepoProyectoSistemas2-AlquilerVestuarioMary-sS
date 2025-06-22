@@ -22,13 +22,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $resultado = $connection->query("
     SELECT p.Nombre, p.ProductoID, c.Categoria, p.Disponible,
-           col1.Color AS Color1, col2.Color AS Color2,
-           p.PrecioUnitario, p.PrecioVenta, p.Stock
-    FROM Producto p
-    JOIN Categoria c ON p.CategoriaID = c.CategoriaID
-    LEFT JOIN Color col1 ON p.ColorID1 = col1.ColorID
-    LEFT JOIN Color col2 ON p.ColorID2 = col2.ColorID
-    WHERE p.Habilitado = 1
+       col1.Color AS Color1, col2.Color AS Color2,
+       p.PrecioUnitario, p.PrecioVenta, p.Stock,
+       IFNULL(dr.conteo, 0) AS VecesRentado
+FROM Producto p
+JOIN Categoria c ON p.CategoriaID = c.CategoriaID
+LEFT JOIN Color col1 ON p.ColorID1 = col1.ColorID
+LEFT JOIN Color col2 ON p.ColorID2 = col2.ColorID
+LEFT JOIN (
+    SELECT ProductoID, COUNT(*) AS conteo
+    FROM DetalleRenta
+    WHERE Habilitado = 1
+    GROUP BY ProductoID
+) dr ON p.ProductoID = dr.ProductoID
+WHERE p.Habilitado = 1
 ");
 
 if ($resultado && $resultado->num_rows > 0) {
@@ -65,17 +72,20 @@ if ($resultado && $resultado->num_rows > 0) {
                         <button type='submit' class='action-btn edit-btn' title='Editar'>
                             <i class='bi bi-pencil-square'></i>
                         </button>
-                    </form>
-
-                    <form method='POST' action='../logic/GestionarProductosLogic.php'>
+                    </form>";
+                    if($producto['VecesRentado'] == 0){
+                        echo "<form method='POST' action='../logic/GestionarProductosLogic.php'>
                         <input type='hidden' name='eliminarProducto' value='{$producto['ProductoID']}'>
                         <button type='submit' class='action-btn delete-btn' title='Eliminar'
                             onclick=\"return confirm('¿Seguro que deseas enviar este producto a la papelera?')\">
                             <i class='bi bi-trash-fill'></i>
                         </button>
-                    </form>
+                    </form>";
+                    }
+                    echo
+                    
 
-                </div>
+                "</div>
             </td>
         </tr>";
     }
